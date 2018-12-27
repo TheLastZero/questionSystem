@@ -112,7 +112,10 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <!-- 
+            https://mvnrepository.com/artifact/mysql/mysql-connector-java 
+            低版本的mysql用这个包
+        -->
         <!--<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
