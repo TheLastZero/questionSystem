@@ -23,6 +23,12 @@ import static net.sf.json.JSONArray.fromObject;
 @Controller
 public class testController {
 
+    /**
+     * 测试post请求
+     * @param object
+     * @param request
+     * @return
+     */
     @RequestMapping("/cors")
     @ResponseBody
     public Msg testJSONCORS(@RequestBody Object object, HttpServletRequest request){
@@ -41,6 +47,11 @@ public class testController {
         return Msg.success().add("d1",o).add("d2",o);
     }
 
+    /**
+     * 测试get请求
+     * @param request
+     * @return
+     */
     @RequestMapping("/getcors")
     @ResponseBody
     public Msg testJSONCORS2(HttpServletRequest request){
