@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 用来处理跨域请求的过滤器
+ */
 public class CORSFilter extends OncePerRequestFilter {
 
     @Override
