@@ -116,11 +116,11 @@
             https://mvnrepository.com/artifact/mysql/mysql-connector-java 
             低版本的mysql用这个包
         -->
-        <!--<dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.47</version>
-        </dependency>-->
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
