@@ -7,9 +7,96 @@
     <result column="qro_content" jdbcType="VARCHAR" property="qroContent" />
     <result column="qro_votes" jdbcType="INTEGER" property="qroVotes" />
   </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    qro_id, question_id, qro_content, qro_votes
+  </sql>
+  <select id="selectByExample" parameterType="com.zerozrz.bean.QuestionReplyOptionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from question_reply_option
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from question_reply_option
+    where qro_id = #{qroId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from question_reply_option
     where qro_id = #{qroId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zerozrz.bean.QuestionReplyOptionExample">
+    delete from question_reply_option
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
   <insert id="insert" parameterType="com.zerozrz.bean.QuestionReplyOption">
     insert into question_reply_option (qro_id, question_id, qro_content, 
@@ -17,6 +104,88 @@
     values (#{qroId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, #{qroContent,jdbcType=VARCHAR}, 
       #{qroVotes,jdbcType=INTEGER})
   </insert>
+  <insert id="insertSelective" parameterType="com.zerozrz.bean.QuestionReplyOption">
+    insert into question_reply_option
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="qroId != null">
+        qro_id,
+      </if>
+      <if test="questionId != null">
+        question_id,
+      </if>
+      <if test="qroContent != null">
+        qro_content,
+      </if>
+      <if test="qroVotes != null">
+        qro_votes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="qroId != null">
+        #{qroId,jdbcType=INTEGER},
+      </if>
+      <if test="questionId != null">
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="qroContent != null">
+        #{qroContent,jdbcType=VARCHAR},
+      </if>
+      <if test="qroVotes != null">
+        #{qroVotes,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zerozrz.bean.QuestionReplyOptionExample" resultType="java.lang.Long">
+    select count(*) from question_reply_option
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update question_reply_option
+    <set>
+      <if test="record.qroId != null">
+        qro_id = #{record.qroId,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionId != null">
+        question_id = #{record.questionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.qroContent != null">
+        qro_content = #{record.qroContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qroVotes != null">
+        qro_votes = #{record.qroVotes,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update question_reply_option
+    set qro_id = #{record.qroId,jdbcType=INTEGER},
+      question_id = #{record.questionId,jdbcType=INTEGER},
+      qro_content = #{record.qroContent,jdbcType=VARCHAR},
+      qro_votes = #{record.qroVotes,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zerozrz.bean.QuestionReplyOption">
+    update question_reply_option
+    <set>
+      <if test="questionId != null">
+        question_id = #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="qroContent != null">
+        qro_content = #{qroContent,jdbcType=VARCHAR},
+      </if>
+      <if test="qroVotes != null">
+        qro_votes = #{qroVotes,jdbcType=INTEGER},
+      </if>
+    </set>
+    where qro_id = #{qroId,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.zerozrz.bean.QuestionReplyOption">
     update question_reply_option
     set question_id = #{questionId,jdbcType=INTEGER},
@@ -24,13 +193,4 @@
       qro_votes = #{qroVotes,jdbcType=INTEGER}
     where qro_id = #{qroId,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select qro_id, question_id, qro_content, qro_votes
-    from question_reply_option
-    where qro_id = #{qroId,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select qro_id, question_id, qro_content, qro_votes
-    from question_reply_option
-  </select>
 </mapper>

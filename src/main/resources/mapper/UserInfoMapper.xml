@@ -9,20 +9,215 @@
     <result column="time_create" jdbcType="TIMESTAMP" property="timeCreate" />
     <result column="img_avatar" jdbcType="VARCHAR" property="imgAvatar" />
   </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, user_nickname, user_sex, user_level, time_create, img_avatar
+  </sql>
+  <select id="selectByExample" parameterType="com.zerozrz.bean.UserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from diagensuser.user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from diagensuser.user_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user_info
+    delete from diagensuser.user_info
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByExample" parameterType="com.zerozrz.bean.UserInfoExample">
+    delete from diagensuser.user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.zerozrz.bean.UserInfo">
-    insert into user_info (user_id, user_nickname, user_sex, 
+    insert into diagensuser.user_info (user_id, user_nickname, user_sex, 
       user_level, time_create, img_avatar
       )
     values (#{userId,jdbcType=INTEGER}, #{userNickname,jdbcType=VARCHAR}, #{userSex,jdbcType=INTEGER}, 
       #{userLevel,jdbcType=INTEGER}, #{timeCreate,jdbcType=TIMESTAMP}, #{imgAvatar,jdbcType=VARCHAR}
       )
   </insert>
+  <insert id="insertSelective" parameterType="com.zerozrz.bean.UserInfo">
+    insert into diagensuser.user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userNickname != null">
+        user_nickname,
+      </if>
+      <if test="userSex != null">
+        user_sex,
+      </if>
+      <if test="userLevel != null">
+        user_level,
+      </if>
+      <if test="timeCreate != null">
+        time_create,
+      </if>
+      <if test="imgAvatar != null">
+        img_avatar,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userNickname != null">
+        #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null">
+        #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userLevel != null">
+        #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="timeCreate != null">
+        #{timeCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgAvatar != null">
+        #{imgAvatar,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zerozrz.bean.UserInfoExample" resultType="java.lang.Long">
+    select count(*) from diagensuser.user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update diagensuser.user_info
+    <set>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userNickname != null">
+        user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSex != null">
+        user_sex = #{record.userSex,jdbcType=INTEGER},
+      </if>
+      <if test="record.userLevel != null">
+        user_level = #{record.userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeCreate != null">
+        time_create = #{record.timeCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.imgAvatar != null">
+        img_avatar = #{record.imgAvatar,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update diagensuser.user_info
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      user_sex = #{record.userSex,jdbcType=INTEGER},
+      user_level = #{record.userLevel,jdbcType=INTEGER},
+      time_create = #{record.timeCreate,jdbcType=TIMESTAMP},
+      img_avatar = #{record.imgAvatar,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zerozrz.bean.UserInfo">
+    update diagensuser.user_info
+    <set>
+      <if test="userNickname != null">
+        user_nickname = #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null">
+        user_sex = #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userLevel != null">
+        user_level = #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="timeCreate != null">
+        time_create = #{timeCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgAvatar != null">
+        img_avatar = #{imgAvatar,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.zerozrz.bean.UserInfo">
-    update user_info
+    update diagensuser.user_info
     set user_nickname = #{userNickname,jdbcType=VARCHAR},
       user_sex = #{userSex,jdbcType=INTEGER},
       user_level = #{userLevel,jdbcType=INTEGER},
@@ -30,13 +225,4 @@
       img_avatar = #{imgAvatar,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select user_id, user_nickname, user_sex, user_level, time_create, img_avatar
-    from user_info
-    where user_id = #{userId,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select user_id, user_nickname, user_sex, user_level, time_create, img_avatar
-    from diagensuser.user_info
-  </select>
 </mapper>

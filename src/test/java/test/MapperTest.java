@@ -31,6 +31,7 @@ public class MapperTest {
 	@Autowired
 	UserInfoMapper userInfoMapper;
 
+
 //	@Autowired
 //	SqlSession sqlSession;
 //	
@@ -53,7 +54,7 @@ public class MapperTest {
 		UserInfoMapper userInfoMapper = ioc.getBean(UserInfoMapper.class);
 		System.out.println(userInfoMapper);
 
-		List<UserInfo> userInfoList = userInfoMapper.selectAll();
+		List<UserInfo> userInfoList = userInfoMapper.selectByExample(null);
 
 		System.out.println(userInfoList);
 
@@ -61,7 +62,7 @@ public class MapperTest {
 		SurveyMapper surveyMapper = ioc.getBean(SurveyMapper.class);
 		System.out.println(surveyMapper);
 
-		List<Survey> surveyList = surveyMapper.selectAll();
+		List<Survey> surveyList = surveyMapper.selectByExample(null);
 
 		System.out.println(surveyList);
 
