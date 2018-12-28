@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerozrz.dao.ReplyMapper">
+  <resultMap id="BaseResultMap" type="com.zerozrz.bean.Reply">
+    <id column="reply_id" jdbcType="INTEGER" property="replyId" />
+    <result column="answer_id" jdbcType="INTEGER" property="answerId" />
+    <result column="question_id" jdbcType="INTEGER" property="questionId" />
+    <result column="qro_id" jdbcType="VARCHAR" property="qroId" />
+    <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from reply
+    where reply_id = #{replyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zerozrz.bean.Reply">
+    insert into reply (reply_id, answer_id, question_id, 
+      qro_id, reply_content)
+    values (#{replyId,jdbcType=INTEGER}, #{answerId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, 
+      #{qroId,jdbcType=VARCHAR}, #{replyContent,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zerozrz.bean.Reply">
+    update reply
+    set answer_id = #{answerId,jdbcType=INTEGER},
+      question_id = #{questionId,jdbcType=INTEGER},
+      qro_id = #{qroId,jdbcType=VARCHAR},
+      reply_content = #{replyContent,jdbcType=VARCHAR}
+    where reply_id = #{replyId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select reply_id, answer_id, question_id, qro_id, reply_content
+    from reply
+    where reply_id = #{replyId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select reply_id, answer_id, question_id, qro_id, reply_content
+    from reply
+  </select>
+</mapper>

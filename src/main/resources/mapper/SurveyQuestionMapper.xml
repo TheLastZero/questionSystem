@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerozrz.dao.SurveyQuestionMapper">
+  <resultMap id="BaseResultMap" type="com.zerozrz.bean.SurveyQuestion">
+    <id column="question_id" jdbcType="INTEGER" property="questionId" />
+    <result column="survey_id" jdbcType="INTEGER" property="surveyId" />
+    <result column="question_type" jdbcType="INTEGER" property="questionType" />
+    <result column="question_title" jdbcType="VARCHAR" property="questionTitle" />
+    <result column="question_explain" jdbcType="VARCHAR" property="questionExplain" />
+    <result column="is_required" jdbcType="INTEGER" property="isRequired" />
+    <result column="question_sort" jdbcType="INTEGER" property="questionSort" />
+    <result column="is_edit" jdbcType="INTEGER" property="isEdit" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from survey_question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zerozrz.bean.SurveyQuestion">
+    insert into survey_question (question_id, survey_id, question_type, 
+      question_title, question_explain, is_required, 
+      question_sort, is_edit)
+    values (#{questionId,jdbcType=INTEGER}, #{surveyId,jdbcType=INTEGER}, #{questionType,jdbcType=INTEGER}, 
+      #{questionTitle,jdbcType=VARCHAR}, #{questionExplain,jdbcType=VARCHAR}, #{isRequired,jdbcType=INTEGER}, 
+      #{questionSort,jdbcType=INTEGER}, #{isEdit,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zerozrz.bean.SurveyQuestion">
+    update survey_question
+    set survey_id = #{surveyId,jdbcType=INTEGER},
+      question_type = #{questionType,jdbcType=INTEGER},
+      question_title = #{questionTitle,jdbcType=VARCHAR},
+      question_explain = #{questionExplain,jdbcType=VARCHAR},
+      is_required = #{isRequired,jdbcType=INTEGER},
+      question_sort = #{questionSort,jdbcType=INTEGER},
+      is_edit = #{isEdit,jdbcType=INTEGER}
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select question_id, survey_id, question_type, question_title, question_explain, is_required, 
+    question_sort, is_edit
+    from survey_question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select question_id, survey_id, question_type, question_title, question_explain, is_required, 
+    question_sort, is_edit
+    from survey_question
+  </select>
+</mapper>

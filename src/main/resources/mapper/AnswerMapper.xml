@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerozrz.dao.AnswerMapper">
+  <resultMap id="BaseResultMap" type="com.zerozrz.bean.Answer">
+    <id column="answer_id" jdbcType="INTEGER" property="answerId" />
+    <result column="survey_id" jdbcType="INTEGER" property="surveyId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="answer_start" jdbcType="TIMESTAMP" property="answerStart" />
+    <result column="answer_end" jdbcType="TIMESTAMP" property="answerEnd" />
+    <result column="answer_time" jdbcType="TIMESTAMP" property="answerTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from answer
+    where answer_id = #{answerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zerozrz.bean.Answer">
+    insert into answer (answer_id, survey_id, user_id, 
+      answer_start, answer_end, answer_time
+      )
+    values (#{answerId,jdbcType=INTEGER}, #{surveyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{answerStart,jdbcType=TIMESTAMP}, #{answerEnd,jdbcType=TIMESTAMP}, #{answerTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zerozrz.bean.Answer">
+    update answer
+    set survey_id = #{surveyId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      answer_start = #{answerStart,jdbcType=TIMESTAMP},
+      answer_end = #{answerEnd,jdbcType=TIMESTAMP},
+      answer_time = #{answerTime,jdbcType=TIMESTAMP}
+    where answer_id = #{answerId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select answer_id, survey_id, user_id, answer_start, answer_end, answer_time
+    from answer
+    where answer_id = #{answerId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select answer_id, survey_id, user_id, answer_start, answer_end, answer_time
+    from answer
+  </select>
+</mapper>

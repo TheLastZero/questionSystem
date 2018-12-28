@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerozrz.dao.SurveyMapper">
+  <resultMap id="BaseResultMap" type="com.zerozrz.bean.Survey">
+    <id column="survey_id" jdbcType="INTEGER" property="surveyId" />
+    <result column="survey_type" jdbcType="VARCHAR" property="surveyType" />
+    <result column="survey_name" jdbcType="VARCHAR" property="surveyName" />
+    <result column="survey_explain" jdbcType="VARCHAR" property="surveyExplain" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="survey_status" jdbcType="INTEGER" property="surveyStatus" />
+    <result column="question_nums" jdbcType="INTEGER" property="questionNums" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from survey
+    where survey_id = #{surveyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zerozrz.bean.Survey">
+    insert into survey (survey_id, survey_type, survey_name, 
+      survey_explain, user_id, create_time, 
+      survey_status, question_nums)
+    values (#{surveyId,jdbcType=INTEGER}, #{surveyType,jdbcType=VARCHAR}, #{surveyName,jdbcType=VARCHAR}, 
+      #{surveyExplain,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{surveyStatus,jdbcType=INTEGER}, #{questionNums,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zerozrz.bean.Survey">
+    update survey
+    set survey_type = #{surveyType,jdbcType=VARCHAR},
+      survey_name = #{surveyName,jdbcType=VARCHAR},
+      survey_explain = #{surveyExplain,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      survey_status = #{surveyStatus,jdbcType=INTEGER},
+      question_nums = #{questionNums,jdbcType=INTEGER}
+    where survey_id = #{surveyId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select survey_id, survey_type, survey_name, survey_explain, user_id, create_time, 
+    survey_status, question_nums
+    from survey
+    where survey_id = #{surveyId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select survey_id, survey_type, survey_name, survey_explain, user_id, create_time, 
+    survey_status, question_nums
+    from wjsys.survey
+  </select>
+</mapper>
