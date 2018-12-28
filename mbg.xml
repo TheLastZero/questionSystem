@@ -5,17 +5,17 @@
 
 <generatorConfiguration>
 
-	<context id="DB2Tables" targetRuntime="MyBatis3">
+	<context id="DB2Tables" targetRuntime="MyBatis3Simple">
 
 		<commentGenerator>
 			<!-- suppressAllComments 配置为true时生成的没有注释 -->
-			<!-- <property name="suppressAllComments" value="true" /> -->
+			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 
 		<!-- 配置数据库连接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/lesson_wh03_questionnaire" userId="root"
-			password="rtylq0504">
+			connectionURL="jdbc:mysql://localhost:3306/wjsys" userId="root"
+			password="rty159753">
 		</jdbcConnection>
 
 		<javaTypeResolver>
@@ -41,13 +41,14 @@
 		</javaClientGenerator>
 
 		<!-- 指定每个表的生成策略 -->
-		<table tableName="user_info" domainObjectName="UserInfo"></table>
-		<table tableName="user_recharge" domainObjectName="UserRecharge"></table>
+		<!--<table tableName="user_info" domainObjectName="UserInfo"></table>
+		<table tableName="user_auths" domainObjectName="UserAuths"></table>-->
+		<table tableName="answer" domainObjectName="Answer"></table>
+		<table tableName="question_reply_option" domainObjectName="QuestionReplyOption"></table>
+		<table tableName="reply" domainObjectName="Reply"></table>
 		<table tableName="survey" domainObjectName="Survey"></table>
 		<table tableName="survey_question" domainObjectName="SurveyQuestion"></table>
-		<table tableName="survey_option" domainObjectName="SurveyOption"></table>
-		<table tableName="answer" domainObjectName="Answer"></table>
-		<table tableName="reply" domainObjectName="Reply"></table>
+
 
 	</context>
 </generatorConfiguration>

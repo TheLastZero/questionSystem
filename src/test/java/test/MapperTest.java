@@ -1,10 +1,19 @@
 package test;
 
+import com.zerozrz.bean.Survey;
+import com.zerozrz.bean.UserInfo;
+import com.zerozrz.dao.SurveyMapper;
+import com.zerozrz.dao.UserInfoMapper;
 import com.zerozrz.utils.MD5;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 /**
  * 测试dao层的工作
@@ -19,9 +28,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations={"classpath:applicationContext.xml"})
 public class MapperTest {
 
-//	@Autowired
-//	UserInfoMapper userInfoMapper;
-//	
+	@Autowired
+	UserInfoMapper userInfoMapper;
+
 //	@Autowired
 //	SqlSession sqlSession;
 //	
@@ -34,16 +43,28 @@ public class MapperTest {
 //	}
 	
 	/**
-	 * 测试DepartmentMapper
+	 * 测试crud
 	 */
 	@Test
 	public void testCRUD(){
-		/*//1、创建SpringIOC容器
+		//1、创建SpringIOC容器
 		ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
 		//2、从容器中获取mapper
-		ioc.getBean(DepartmentMapper.class);*/
-//		System.out.println(userInfoMapper);
-		
+		UserInfoMapper userInfoMapper = ioc.getBean(UserInfoMapper.class);
+		System.out.println(userInfoMapper);
+
+		List<UserInfo> userInfoList = userInfoMapper.selectAll();
+
+		System.out.println(userInfoList);
+
+
+		SurveyMapper surveyMapper = ioc.getBean(SurveyMapper.class);
+		System.out.println(surveyMapper);
+
+		List<Survey> surveyList = surveyMapper.selectAll();
+
+		System.out.println(surveyList);
+
 		//1、插入几个部门
 //		departmentMapper.insertSelective(new Department(null, "开发部"));
 //		departmentMapper.insertSelective(new Department(null, "测试部"));
