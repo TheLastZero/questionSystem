@@ -5,6 +5,9 @@
 <configuration>
 	
 	<settings>
+		<!--打印日志（可以看到sql）-->
+		<setting name="logImpl" value="LOG4J"/>
+
 		<!-- 开启驼峰命名规则 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
